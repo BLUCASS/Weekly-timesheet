@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timesheet Submitted</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    th, td {
+      border: 1px solid #cccccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .day-off {
+      background-color: #eeeeee;
+      color: #555555;
+    }
+
+    .total {
+      font-weight: bold;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Timesheet submitted</h2>
+
+  <p>
+    Week: <strong>{{ week_start }}</strong> to
+    <strong>{{ week_end }}</strong>
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Date</th>
+        <th>Hours worked</th>
+        <th>Minutes worked</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for day, entry in timesheet.items() %}
+      <tr>
+        <td>{{ day }}</td>
+        <td>{{ entry.date.strftime('%d %m %Y') }}</td>
+        <td>{{ entry.hours }}</td>
+        <td>{{ entry.minutes }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="total">
+    Total worked: {{ total_hours }} hours and {{ total_minutes }} minutes
+  </p>
+
+  <a href="/">Submit another timesheet</a>
+</body>
+</html>
