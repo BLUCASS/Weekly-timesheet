@@ -63,13 +63,13 @@ async def submit_timesheet(
     }
 
     timesheet = {
-        "monday": {"date": week_dates["monday"], "hours": hours_monday, "minutes": minutes_monday},
-        "tuesday": {"date": week_dates["tuesday"], "hours": hours_tuesday, "minutes": minutes_tuesday},
-        "wednesday": {"date": week_dates["wednesday"], "hours": hours_wednesday, "minutes": minutes_wednesday},
-        "thursday": {"date": week_dates["thursday"], "hours": hours_thursday, "minutes": minutes_thursday},
-        "friday": {"date": week_dates["friday"], "hours": hours_friday, "minutes": minutes_friday},
-        "saturday": {"date": week_dates["saturday"], "hours": hours_saturday, "minutes": minutes_saturday},
-        "sunday": {"date": week_dates["sunday"], "hours": hours_sunday, "minutes": minutes_sunday},
+        "Monday": {"date": week_dates["monday"], "hours": hours_monday, "minutes": minutes_monday},
+        "Tuesday": {"date": week_dates["tuesday"], "hours": hours_tuesday, "minutes": minutes_tuesday},
+        "Wednesday": {"date": week_dates["wednesday"], "hours": hours_wednesday, "minutes": minutes_wednesday},
+        "Thursday": {"date": week_dates["thursday"], "hours": hours_thursday, "minutes": minutes_thursday},
+        "Friday": {"date": week_dates["friday"], "hours": hours_friday, "minutes": minutes_friday},
+        "Saturday": {"date": week_dates["saturday"], "hours": hours_saturday, "minutes": minutes_saturday},
+        "Sunday": {"date": week_dates["sunday"], "hours": hours_sunday, "minutes": minutes_sunday},
     }
 
     for day in timesheet:
@@ -91,3 +91,5 @@ async def submit_timesheet(
             "total_minutes": final_minutes,
         }
     )
+
+asyn def ("/payroll")

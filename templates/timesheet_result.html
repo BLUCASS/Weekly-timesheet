@@ -4,46 +4,136 @@
   <meta charset="UTF-8">
   <title>Timesheet Submitted</title>
 
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 50px 20px;
+      background: linear-gradient(135deg, #eef2f7 0%, #dde6f0 100%);
+      color: #2b2f38;
+      min-height: 100vh;
+    }
+
+    h2 {
+      max-width: 720px;
+      margin: 0 auto 6px;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1a2233;
+    }
+
+    p {
+      max-width: 720px;
+      margin: 0 auto 20px;
+      color: #4a5568;
+      font-size: 15px;
+    }
+
+    strong {
+      color: #1f6feb;
     }
 
     table {
       border-collapse: collapse;
       min-width: 650px;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto 24px;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(30, 41, 59, 0.08);
     }
 
     th, td {
-      border: 1px solid #cccccc;
-      padding: 10px;
+      border: none;
+      border-bottom: 1px solid #edf1f5;
+      padding: 13px 16px;
       text-align: left;
+      font-size: 14px;
     }
 
     th {
-      background-color: #f2f2f2;
+      background-color: #1f6feb;
+      color: #ffffff;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 12px;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    tbody tr:hover {
+      background-color: #eef4ff;
     }
 
     .day-off {
-      background-color: #eeeeee;
-      color: #555555;
+      background-color: #f1f1f3 !important;
+      color: #8a8f99;
     }
 
     .total {
-      font-weight: bold;
-      margin-top: 16px;
+      max-width: 720px;
+      margin: 0 auto 24px;
+      font-weight: 700;
+      font-size: 17px;
+      padding: 16px 20px;
+      background-color: #eafaf0;
+      border: 1px solid #b7e4c7;
+      border-radius: 10px;
+      color: #1e6b3c;
+      text-align: center;
+    }
+
+    a {
+      display: inline-block;
+      max-width: 720px;
+      margin: 0 auto;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #1f6feb;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+    }
+
+    a:hover {
+      background-color: #1656b8;
+      transform: translateY(-1px);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   </style>
 </head>
 
+
 <body>
   <h2>Timesheet submitted</h2>
+
 
   <p>
     Week: <strong>{{ week_start }}</strong> to
     <strong>{{ week_end }}</strong>
   </p>
+
 
   <table>
     <thead>
@@ -54,6 +144,7 @@
         <th>Minutes worked</th>
       </tr>
     </thead>
+
 
     <tbody>
       {% for day, entry in timesheet.items() %}
@@ -67,10 +158,13 @@
     </tbody>
   </table>
 
+
   <p class="total">
     Total worked: {{ total_hours }} hours and {{ total_minutes }} minutes
   </p>
 
+
   <a href="/">Submit another timesheet</a>
+  <a href="/payroll">Sum payroll</a>
 </body>
 </html>
