@@ -91,5 +91,3 @@ async def submit_timesheet(
             "total_minutes": final_minutes,
         }
     )
-
-asyn def ("/payroll")
