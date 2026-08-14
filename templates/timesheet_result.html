@@ -2,169 +2,274 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Timesheet Submitted</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --ink-900: #1b2430;
+      --ink-700: #2a3648;
+      --steel-500: #5a6c85;
+      --steel-300: #c9d2dc;
+      --steel-200: #e3e8ee;
+      --paper-050: #f5f7fa;
+      --amber-500: #e8a325;
+      --amber-glow: rgba(232, 163, 37, 0.35);
+      --green-500: #2fae6b;
+      --white: #ffffff;
     }
+
+    * { box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      padding: 50px 20px;
-      background: linear-gradient(135deg, #eef2f7 0%, #dde6f0 100%);
-      color: #2b2f38;
+      padding: 56px 20px 64px;
+      background: linear-gradient(165deg, #eef1f5 0%, #dde3ea 100%);
+      color: var(--ink-900);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    h2 {
-      max-width: 720px;
-      margin: 0 auto 6px;
-      font-size: 26px;
-      font-weight: 700;
-      color: #1a2233;
+    .masthead {
+      max-width: 640px;
+      width: 100%;
+      margin-bottom: 22px;
     }
 
-    p {
-      max-width: 720px;
-      margin: 0 auto 20px;
-      color: #4a5568;
-      font-size: 15px;
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel-500);
+      margin-bottom: 10px;
     }
 
-    strong {
-      color: #1f6feb;
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.green {
+      background: var(--green-500);
+      box-shadow: 0 0 0 3px rgba(47, 174, 107, 0.18);
+    }
+
+    h1 {
+      font-family: 'Oswald', 'Segoe UI', sans-serif;
+      font-weight: 600;
+      font-size: 30px;
+      margin: 0 0 8px;
+      color: var(--ink-700);
+    }
+
+    .subtext {
+      margin: 0;
+      color: var(--steel-500);
+      font-size: 14.5px;
+    }
+
+    .subtext strong {
+      color: var(--ink-900);
+      font-weight: 600;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 640px;
+      background: var(--white);
+      border: 1px solid var(--steel-300);
+      border-radius: 10px;
+      box-shadow: 0 10px 28px rgba(27, 36, 48, 0.08);
+      padding: 6px;
+      margin-bottom: 18px;
     }
 
     table {
       border-collapse: collapse;
-      min-width: 650px;
-      max-width: 720px;
       width: 100%;
-      margin: 0 auto 24px;
-      background: #ffffff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(30, 41, 59, 0.08);
     }
 
     th, td {
       border: none;
-      border-bottom: 1px solid #edf1f5;
-      padding: 13px 16px;
+      border-bottom: 1px solid var(--steel-200);
+      padding: 11px 14px;
       text-align: left;
       font-size: 14px;
     }
 
     th {
-      background-color: #1f6feb;
-      color: #ffffff;
-      font-weight: 600;
+      background-color: var(--ink-700);
+      color: var(--white);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: 12px;
+      letter-spacing: 0.07em;
+      font-size: 11px;
+      padding: 12px 14px;
     }
 
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
+    thead tr th:first-child { border-top-left-radius: 6px; }
+    thead tr th:last-child { border-top-right-radius: 6px; }
 
-    tbody tr:nth-child(even) {
-      background-color: #f8fafc;
-    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:nth-child(even) { background-color: var(--paper-050); }
+    tbody tr:hover { background-color: #eef4fb; }
 
-    tbody tr:hover {
-      background-color: #eef4ff;
+    td.hours, td.minutes {
+      font-family: 'IBM Plex Mono', monospace;
     }
 
     .day-off {
-      background-color: #f1f1f3 !important;
-      color: #8a8f99;
+      color: var(--steel-500) !important;
+      background-color: var(--paper-050) !important;
     }
 
-    .total {
-      max-width: 720px;
-      margin: 0 auto 24px;
-      font-weight: 700;
-      font-size: 17px;
-      padding: 16px 20px;
-      background-color: #eafaf0;
-      border: 1px solid #b7e4c7;
+    .day-off .day-name::after {
+      content: "off";
+      margin-left: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--steel-500);
+      background: var(--steel-200);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .readout {
+      width: 100%;
+      max-width: 640px;
+      background: var(--ink-700);
       border-radius: 10px;
-      color: #1e6b3c;
-      text-align: center;
+      padding: 22px 24px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 10px 28px rgba(27, 36, 48, 0.18);
     }
 
-    a {
-      display: inline-block;
-      max-width: 720px;
-      margin: 0 auto;
+    .readout .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel-300);
+    }
+
+    .readout .value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--amber-500);
+      text-shadow: 0 0 18px var(--amber-glow);
+      letter-spacing: 0.02em;
+    }
+
+    .readout .value span {
+      font-size: 15px;
+      color: var(--steel-300);
+      font-weight: 500;
+      margin: 0 2px 0 6px;
+      text-shadow: none;
+    }
+
+    a.secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       text-decoration: none;
-      color: #ffffff;
-      background-color: #1f6feb;
-      padding: 10px 20px;
+      color: var(--ink-700);
+      background-color: var(--white);
+      border: 1px solid var(--steel-300);
+      padding: 11px 22px;
       border-radius: 8px;
       font-weight: 600;
       font-size: 14px;
-      transition: background-color 0.2s ease, transform 0.15s ease;
+      transition: border-color 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
     }
 
-    a:hover {
-      background-color: #1656b8;
+    a.secondary::before {
+      content: "\2190";
+      color: var(--steel-500);
+    }
+
+    a.secondary:hover {
+      background-color: var(--paper-050);
+      border-color: var(--steel-500);
       transform: translateY(-1px);
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    a:focus-visible {
+      outline: 2px solid var(--amber-500);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 560px) {
+      .readout { flex-direction: column; align-items: flex-start; gap: 8px; }
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        padding: 10px 6px;
+        border-bottom: 1px solid var(--steel-200);
+      }
+      tr:last-child { border-bottom: none; }
+      td { border-bottom: none; padding: 2px 4px; }
     }
   </style>
 </head>
 
-
 <body>
-  <h2>Timesheet submitted</h2>
+  <div class="masthead">
+    <div class="eyebrow"><span class="dot green"></span> Submitted</div>
+    <h1>Timesheet submitted</h1>
+    <p class="subtext">Week: <strong>{{ week_start }}</strong> to <strong>{{ week_end }}</strong></p>
+  </div>
 
+  <div class="panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Date</th>
+          <th>Hours</th>
+          <th>Minutes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for day, entry in timesheet.items() %}
+        <tr{% if entry.hours == 0 and entry.minutes == 0 %} class="day-off"{% endif %}>
+          <td class="day-name">{{ day }}</td>
+          <td>{{ entry.date.strftime('%d %m %Y') }}</td>
+          <td class="hours">{{ entry.hours }}</td>
+          <td class="minutes">{{ entry.minutes }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
-  <p>
-    Week: <strong>{{ week_start }}</strong> to
-    <strong>{{ week_end }}</strong>
-  </p>
+  <div class="readout">
+    <span class="label">Total worked</span>
+    <span class="value">{{ total_hours }}<span>h</span>{{ total_minutes }}<span>m</span></span>
+  </div>
 
-
-  <table>
-    <thead>
-      <tr>
-        <th>Day</th>
-        <th>Date</th>
-        <th>Hours worked</th>
-        <th>Minutes worked</th>
-      </tr>
-    </thead>
-
-
-    <tbody>
-      {% for day, entry in timesheet.items() %}
-      <tr>
-        <td>{{ day }}</td>
-        <td>{{ entry.date.strftime('%d %m %Y') }}</td>
-        <td>{{ entry.hours }}</td>
-        <td>{{ entry.minutes }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-
-  <p class="total">
-    Total worked: {{ total_hours }} hours and {{ total_minutes }} minutes
-  </p>
-
-
-  <a href="/">Submit another timesheet</a>
-
+  <a class="secondary" href="/">Submit another timesheet</a>
 </body>
 </html>

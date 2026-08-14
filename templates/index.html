@@ -2,245 +2,297 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weekly Timesheet</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --ink-900: #1b2330;
+      --ink-700: #2a3648;
+      --steel-500: #5a6c85;
+      --steel-300: #c9d2dc;
+      --steel-200: #e3e8ee;
+      --paper-050: #f5f7fa;
+      --amber-500: #e8a325;
+      --amber-glow: rgba(232, 163, 37, 0.35);
+      --green-500: #2fae6b;
+      --white: #ffffff;
     }
 
+    * { box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      padding: 50px 20px;
-      background: linear-gradient(135deg, #eef2f7 0%, #dde6f0 100%);
-      color: #2b2f38;
+      padding: 56px 20px 64px;
+      background: linear-gradient(165deg, #eef1f5 0%, #dde3ea 100%);
+      color: var(--ink-900);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    h2 {
-      max-width: 700px;
-      margin: 0 auto 6px;
-      font-size: 26px;
-      font-weight: 700;
-      color: #1a2233;
+    .masthead {
+      max-width: 640px;
+      width: 100%;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel-500);
+      margin-bottom: 10px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.green {
+      background: var(--green-500);
+      box-shadow: 0 0 0 3px rgba(47, 174, 107, 0.18);
+    }
+
+    h1 {
+      font-family: 'Oswald', 'Segoe UI', sans-serif;
+      font-weight: 600;
+      font-size: 30px;
+      letter-spacing: 0.01em;
+      margin: 0 0 8px;
+      color: var(--ink-700);
+    }
+
+    .help-text {
+      margin: 0;
+      color: var(--steel-500);
+      font-size: 14.5px;
+      line-height: 1.5;
+      max-width: 46ch;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 640px;
+      background: var(--white);
+      border: 1px solid var(--steel-300);
+      border-radius: 10px;
+      box-shadow: 0 10px 28px rgba(27, 36, 48, 0.08);
+      padding: 6px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
 
     table {
       border-collapse: collapse;
-      min-width: 650px;
-      max-width: 700px;
       width: 100%;
-      background: #ffffff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(30, 41, 59, 0.08);
-      margin-bottom: 8px;
     }
 
     th, td {
       border: none;
-      border-bottom: 1px solid #edf1f5;
-      padding: 12px 16px;
+      border-bottom: 1px solid var(--steel-200);
+      padding: 11px 14px;
       text-align: left;
       font-size: 14px;
       vertical-align: middle;
     }
 
     th {
-      background-color: #1f6feb;
-      color: #ffffff;
-      font-weight: 600;
+      background-color: var(--ink-700);
+      color: var(--white);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: 12px;
+      letter-spacing: 0.07em;
+      font-size: 11px;
+      padding: 12px 14px;
     }
 
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
+    thead tr th:first-child { border-top-left-radius: 6px; }
+    thead tr th:last-child { border-top-right-radius: 6px; }
 
-    tbody tr:nth-child(even) {
-      background-color: #f8fafc;
-    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:nth-child(even) { background-color: var(--paper-050); }
+    tbody tr:hover { background-color: #eef4fb; }
 
-    tbody tr:hover {
-      background-color: #eef4ff;
+    .day-label {
+      font-weight: 600;
+      color: var(--ink-900);
     }
 
     input {
+      font-family: 'IBM Plex Mono', monospace;
       padding: 8px 10px;
-      border: 1px solid #d3dbe4;
+      border: 1px solid var(--steel-300);
       border-radius: 6px;
       font-size: 14px;
-      background-color: #fbfcfd;
-      color: #2b2f38;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background-color: var(--paper-050);
+      color: var(--ink-900);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
     }
 
     input:focus {
       outline: none;
-      border-color: #1f6feb;
-      box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.15);
-      background-color: #ffffff;
+      border-color: var(--amber-500);
+      box-shadow: 0 0 0 3px var(--amber-glow);
+      background-color: var(--white);
     }
 
     input[type="number"] {
-      width: 70px;
+      width: 66px;
+      text-align: right;
     }
 
     input[type="date"] {
-      width: 150px;
+      width: 152px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 14px 10px;
     }
 
     button {
-      margin-top: 16px;
-      padding: 12px 26px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 23px;
       cursor: pointer;
-      background-color: #1f6feb;
-      color: #ffffff;
+      background-color: var(--ink-700);
+      color: var(--white);
       border: none;
       border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      transition: background-color 0.2s ease, transform 0.15s ease;
-      box-shadow: 0 3px 10px rgba(31, 111, 235, 0.25);
-    }
-
-    button:hover {
-      background-color: #1656b8;
-      transform: translateY(-1px);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    .help-text {
-      max-width: 700px;
-      color: #5a6472;
-      margin-bottom: 22px;
+      font-family: 'Inter', sans-serif;
       font-size: 14.5px;
-      text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: background-color 0.15s ease, transform 0.15s ease;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 700px;
+    button::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber-500);
+      box-shadow: 0 0 0 3px var(--amber-glow);
+    }
+
+    button:hover { background-color: #1b2330; transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 2px solid var(--amber-500);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 560px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      td { border-bottom: none; padding: 6px 4px; }
+      tr {
+        display: grid;
+        grid-template-columns: 90px 1fr 1fr;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 6px;
+        border-bottom: 1px solid var(--steel-200);
+      }
+      tr:last-child { border-bottom: none; }
+      td[rowspan] {
+        grid-column: 1 / -1;
+        border-bottom: 1px solid var(--steel-200);
+        padding-bottom: 14px;
+        margin-bottom: 4px;
+      }
+      input[type="number"] { width: 100%; }
     }
   </style>
 </head>
 
-
 <body>
-  <h2>Weekly Timesheet</h2>
+  <div class="masthead">
+    <div class="eyebrow"><span class="dot green"></span> Time clock &middot; Ready</div>
+    <h1>Weekly Timesheet</h1>
+    <p class="help-text">Select the Monday that starts the week, then log hours and minutes worked for each day.</p>
+  </div>
 
+  <div class="panel">
+    <form action="/submit-timesheet" method="post">
+      <table>
+        <thead>
+          <tr>
+            <th>Start date</th>
+            <th>Day</th>
+            <th>Hours</th>
+            <th>Minutes</th>
+          </tr>
+        </thead>
 
-  <p class="help-text">
-    Select the Monday that starts the week, then enter hours and minutes for each day.
-  </p>
+        <tbody>
+          <tr>
+            <td rowspan="7">
+              <input type="date" name="start_date" required>
+            </td>
+            <td class="day-label">Monday</td>
+            <td><input type="number" name="hours_monday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_monday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="day-label">Tuesday</td>
+            <td><input type="number" name="hours_tuesday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_tuesday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="day-label">Wednesday</td>
+            <td><input type="number" name="hours_wednesday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_wednesday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="day-label">Thursday</td>
+            <td><input type="number" name="hours_thursday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_thursday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="day-label">Friday</td>
+            <td><input type="number" name="hours_friday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_friday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="day-label">Saturday</td>
+            <td><input type="number" name="hours_saturday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_saturday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="day-label">Sunday</td>
+            <td><input type="number" name="hours_sunday" min="0" max="23" step="1" value="0" required></td>
+            <td><input type="number" name="minutes_sunday" min="0" max="59" step="1" value="0" required></td>
+          </tr>
+        </tbody>
+      </table>
 
-
-  <form action="/submit-timesheet" method="post">
-    <table>
-      <thead>
-        <tr>
-          <th>Start date</th>
-          <th>Day</th>
-          <th>Hours worked</th>
-          <th>Minutes worked</th>
-        </tr>
-      </thead>
-
-
-      <tbody>
-        <tr>
-          <td rowspan="7">
-            <input
-              type="date"
-              name="start_date"
-              required
-            >
-          </td>
-          <td>Monday</td>
-          <td>
-            <input
-              type="number"
-              name="hours_monday"
-              min="0"
-              max="24"
-              step="1"
-              value="0"
-              required
-            >
-          </td>
-          <td>
-            <input
-              type="number"
-              name="minutes_monday"
-              min="0"
-              max="59"
-              step="1"
-              value="0"
-              required
-            >
-          </td>
-        </tr>
-
-
-        <tr>
-          <td>Tuesday</td>
-          <td><input type="number" name="hours_tuesday" min="0" max="24" step="1" value="0" required></td>
-          <td><input type="number" name="minutes_tuesday" min="0" max="59" step="1" value="0" required></td>
-        </tr>
-
-
-        <tr>
-          <td>Wednesday</td>
-          <td><input type="number" name="hours_wednesday" min="0" max="24" step="1" value="0" required></td>
-          <td><input type="number" name="minutes_wednesday" min="0" max="59" step="1" value="0" required></td>
-        </tr>
-
-
-        <tr>
-          <td>Thursday</td>
-          <td><input type="number" name="hours_thursday" min="0" max="24" step="1" value="0" required></td>
-          <td><input type="number" name="minutes_thursday" min="0" max="59" step="1" value="0" required></td>
-        </tr>
-
-
-        <tr>
-          <td>Friday</td>
-          <td><input type="number" name="hours_friday" min="0" max="24" step="1" value="0" required></td>
-          <td><input type="number" name="minutes_friday" min="0" max="59" step="1" value="0" required></td>
-        </tr>
-
-
-        <tr>
-          <td>Saturday</td>
-          <td><input type="number" name="hours_saturday" min="0" max="24" step="1" value="0" required></td>
-          <td><input type="number" name="minutes_saturday" min="0" max="59" step="1" value="0" required></td>
-        </tr>
-
-
-        <tr>
-          <td>Sunday</td>
-          <td><input type="number" name="hours_sunday" min="0" max="24" step="1" value="0" required></td>
-          <td><input type="number" name="minutes_sunday" min="0" max="59" step="1" value="0" required></td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <button type="submit">Submit timesheet</button>
-  </form>
+      <div class="actions">
+        <button type="submit">Submit timesheet</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
