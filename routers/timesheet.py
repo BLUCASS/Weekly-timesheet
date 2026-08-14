@@ -2,9 +2,12 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi import APIRouter, Request, Form, HTTPException
 from datetime import date, timedelta
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent # routers/ -> project root
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 MAX_MINUTES_PER_DAY = 59
 MAX_HOURS_PER_WEEK = 70
