@@ -7,7 +7,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 MAX_MINUTES_PER_DAY = 59
-MAX_HOURS_PER_WEEk = 70
+MAX_HOURS_PER_WEEK = 70
 MAX_HOURS_PER_DAY = 23
 
 # Sum all the hours and minutes and returns false if they are equal to 0
@@ -30,7 +30,7 @@ def hours_dont_exceed(total_hours: int) -> bool:
 # Sum all the hours and checks if they are under the weekly limit
 def is_within_weekly_limit(total_hours: int) -> bool:
     """Return False if the week's total exceeds the weekly cap."""
-    return total_hours <= MAX_HOURS_PER_WEEk
+    return total_hours <= MAX_HOURS_PER_WEEK
 
 # This function will validate the user's inputs to check 
 # if they are all integer and they are within range
@@ -138,8 +138,7 @@ async def submit_timesheet(
         raise HTTPException(
             status_code=422,
             detail=
-                f"A weekly timesheet cannot exceed {MAX_HOURS_PER_WEEk}"
-                f"You submitted {final_hours}h."
+                f"A weekly timesheet cannot exceed {MAX_HOURS_PER_WEEK}."
         )
 
     return templates.TemplateResponse(
